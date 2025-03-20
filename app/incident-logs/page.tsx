@@ -37,10 +37,7 @@ export default function IncidentLogs() {
   }, []);
 
   useEffect(() => {
-    if (!user) {
-      router.push('/login'); // Redirect to login if not authenticated
-      return;
-    }
+    if (!user) return;
 
     const fetchIncidents = async () => {
       const { data, error } = await supabase
@@ -59,7 +56,7 @@ export default function IncidentLogs() {
     };
 
     fetchIncidents();
-  }, [user, router]);
+  }, [user]);
 
   useEffect(() => {
     let filtered = incidents;
