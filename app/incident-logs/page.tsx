@@ -12,6 +12,8 @@ interface Incident {
   location: string;
   status: string;
   created_at: string;
+  reported_by: string;
+  reported_by_name?: string;
 }
 
 export default function IncidentLogs() {
@@ -42,7 +44,7 @@ export default function IncidentLogs() {
     const fetchIncidents = async () => {
       const { data, error } = await supabase
         .from("incidents")
-        .select("id, title, incident_type, location, status, created_at")
+        .select("id, title, incident_type, location, status, created_at, reported_by")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -50,8 +52,31 @@ export default function IncidentLogs() {
         return;
       }
 
-      setIncidents(data || []);
-      setFilteredIncidents(data || []);
+      // Fetch user names for reported_by
+      const userIds = [...new Set(data.map(incident => incident.reported_by))];
+      const userMap: Record<string, string> = {};
+
+      for (const userId of userIds) {
+        if (userId) {
+          const { data: userData, error: userError } = await supabase
+            .from("users")
+            .select("id, name")
+            .eq("id", userId)
+            .single();
+          if (!userError) {
+            userMap[userId] = userData?.name || "Unknown User";
+          }
+        }
+      }
+
+      // Map incidents with user names
+      const incidentsWithUsers = data.map(incident => ({
+        ...incident,
+        reported_by_name: userMap[incident.reported_by] || "Unknown User",
+      }));
+
+      setIncidents(incidentsWithUsers);
+      setFilteredIncidents(incidentsWithUsers);
       setLoading(false);
     };
 
@@ -187,6 +212,10 @@ export default function IncidentLogs() {
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-gray-500" />
                       <span>{new Date(incident.created_at).toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-gray-500" />
+                      <span className="text-white">Reported by: {incident.reported_by_name}</span>
                     </div>
                   </div>
                   
