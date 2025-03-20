@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import supabase from "@/lib/db/supabaseClient";
-// import Image from "next/image";
 import { Calendar, MapPin, AlertCircle, Clock, ArrowLeft } from "lucide-react";
 
 interface Incident {

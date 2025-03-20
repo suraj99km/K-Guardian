@@ -1,8 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import supabase from "@/lib/db/supabaseClient";
 import Image from "next/image";
 import Link from "next/link";
 

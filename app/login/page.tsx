@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import supabase from "@/lib/db/supabaseClient";
-import { toast } from "sonner";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false);
