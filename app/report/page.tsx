@@ -1,4 +1,5 @@
 "use client";
+
 import { toast } from "sonner";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -52,7 +53,7 @@ export default function Report() {
       if (!data?.user) {
         router.push("/login"); // Redirect if not authenticated
       } else {
-        setUser(data.user.id);
+        setUser(data.user?.email ?? null);
       }
     };
     
@@ -139,7 +140,7 @@ export default function Report() {
           incident_type: incidentType,
           location,
           media_url: mediaUrl, // Use the uploaded image URL
-          reported_by: user,
+          reported_by_email: user,
         },
       ])
       .select("id")

@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import supabase from "@/lib/db/supabaseClient";
@@ -12,7 +13,6 @@ interface Incident {
   location: string;
   status: string;
   created_at: string;
-  reported_by: string;
   reported_by_email?: string; // Updated to email
 }
 
@@ -44,7 +44,7 @@ export default function IncidentLogs() {
     const fetchIncidents = async () => {
       const { data, error } = await supabase
         .from("incidents")
-        .select("id, title, incident_type, location, status, created_at, reported_by")
+        .select("id, title, incident_type, location, status, created_at, reported_by_email")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -52,31 +52,8 @@ export default function IncidentLogs() {
         return;
       }
 
-      // Fetch user emails for reported_by
-      const userIds = [...new Set(data.map(incident => incident.reported_by))];
-      const userMap: Record<string, string> = {};
-
-      for (const userId of userIds) {
-        if (userId) {
-          const { data: userData, error: userError } = await supabase
-            .from("auth.users") // Fetch from auth.users
-            .select("id, email") // Get email instead of name
-            .eq("id", userId)
-            .single();
-          if (!userError) {
-            userMap[userId] = userData?.email || "Unknown User";
-          }
-        }
-      }
-
-      // Map incidents with user emails
-      const incidentsWithUsers = data.map(incident => ({
-        ...incident,
-        reported_by_email: userMap[incident.reported_by] || "Unknown User", // Updated to email
-      }));
-
-      setIncidents(incidentsWithUsers);
-      setFilteredIncidents(incidentsWithUsers);
+      setIncidents(data || []);
+      setFilteredIncidents(data || []);
       setLoading(false);
     };
 
@@ -215,7 +192,7 @@ export default function IncidentLogs() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Shield className="h-4 w-4 text-gray-500" />
-                      <span className="text-white">Reported by: {incident.reported_by_email}</span> {/* Updated to email */}
+                      <span className="text-gray-300">Reported by: {incident.reported_by_email}</span> {/* Updated to email */}
                     </div>
                   </div>
                   
