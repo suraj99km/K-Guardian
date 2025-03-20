@@ -103,7 +103,7 @@ export default function IncidentLogs() {
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
           <Shield className="h-8 w-8 text-cyan-400" />
-          <h1 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Your Reported Incidents</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">IIMK Reported Incidents</h1>
         </div>
         
         {/* Search and Filter Bar */}
