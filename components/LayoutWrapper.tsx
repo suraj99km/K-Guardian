@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-// import Footer from "@/Footer";
 import Navbar from "@/components/NavBar";
 
 const LayoutWrapper = ({ children }: { children: React.ReactNode }) => {
