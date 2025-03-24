@@ -150,11 +150,11 @@ export default function IncidentDetail() {
             
             {/* Image */}
             {incident.media_url && (
-              <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-800">
+              <div className="relative w-full max-h-[500px] rounded-lg overflow-hidden bg-gray-800 flex justify-center items-center">
                 <img
                   src={incident.media_url.trim()}
                   alt="Incident Image not loaded"
-                  className="object-cover w-full h-auto hover:scale-105 transition duration-300"
+                  className="max-w-full max-h-full object-contain"
                 />
               </div>
             )}

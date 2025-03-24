@@ -172,7 +172,7 @@ export default function Report() {
       setMediaUrl(null); // Reset mediaUrl
       setSuccess(false);
       router.push("/");
-    }, 8000);
+    }, 3000);
   };
 
   // Handle file size and type validation

@@ -69,7 +69,7 @@ export async function uploadImage(file: File, folder: string): Promise<string | 
   
     // ✅ Check if file already exists
     const { data: existingFiles, error: existingError } = await supabase.storage
-      .from("craftid.in-images")
+      .from("k-guardian-media")
       .list(folder);
   
     if (existingError) {
@@ -80,7 +80,7 @@ export async function uploadImage(file: File, folder: string): Promise<string | 
     const fileExists = existingFiles.some((file) => file.name.includes(hash));
     if (fileExists) {
       console.log("File already exists:", filePath);
-      return supabase.storage.from("craftid.in-images").getPublicUrl(filePath).data.publicUrl ?? null;
+      return supabase.storage.from("k-guardian-media").getPublicUrl(filePath).data.publicUrl ?? null;
     }
   
     console.log("Uploading new file:", filePath);
@@ -106,7 +106,7 @@ export async function uploadImage(file: File, folder: string): Promise<string | 
     console.log("Profile image is now public:", filePath);
   
     // ✅ Retrieve and return the public URL
-    const publicUrl = supabase.storage.from("craftid.in-images").getPublicUrl(filePath).data.publicUrl ?? null;
+    const publicUrl = supabase.storage.from("k-guardian-media").getPublicUrl(filePath).data.publicUrl ?? null;
     console.log("Returning new public URL:", publicUrl);
     return publicUrl;
 }
