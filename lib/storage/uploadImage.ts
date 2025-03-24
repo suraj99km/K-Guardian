@@ -86,7 +86,7 @@ export async function uploadImage(file: File, folder: string): Promise<string | 
     console.log("Uploading new file:", filePath);
   
     // ✅ Upload the compressed image to Supabase Storage
-    const { data, error } = await supabase.storage.from("craftid.in-images").upload(filePath, compressedFile, {
+    const { data, error } = await supabase.storage.from("k-guardian-media").upload(filePath, compressedFile, {
       cacheControl: "3600", // Ensure caching does not interfere
       upsert: false, // Prevent overwriting
     });

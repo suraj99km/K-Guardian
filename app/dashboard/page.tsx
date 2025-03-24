@@ -142,7 +142,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="mt-16 min-h-screen bg-gradient-to-b from-gray-950 to-gray-900 text-white p-4 md:p-6 lg:p-8">
+    <div className="mt-14 min-h-screen bg-gradient-to-b from-gray-950 to-gray-900 text-white p-4 md:p-6 lg:p-8">
       <header className="mb-6">
         <div className="flex items-center gap-3 mb-4">
           <Shield className="h-7 w-7 text-cyan-400" />
